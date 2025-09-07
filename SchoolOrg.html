@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClubHub - Student Organization Management</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="container">
+      <h1>ClubHub</h1>
+      <div class="nav-links">
+        <button id="dashboard-btn">Dashboard</button>
+        <button id="clubs-btn">Clubs Directory</button>
+        <button id="profile-btn">My Profile</button>
+      </div>
+      <button id="mobile-menu-btn" class="mobile-menu-btn">☰</button>
+      <ul id="mobile-menu" class="mobile-menu">
+        <li><button id="mobile-dashboard-btn">Dashboard</button></li>
+        <li><button id="mobile-clubs-btn">Clubs Directory</button></li>
+        <li><button id="mobile-profile-btn">My Profile</button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <main>
+    <div class="container">
+
+      <!-- Login Page -->
+      <div id="login-page" class="page">
+        <h2 class="section-heading">Login to ClubHub</h2>
+        <div class="card center">
+          <input type="text" id="login-email" placeholder="Email"><br><br>
+          <input type="password" id="login-password" placeholder="Password"><br><br>
+          <button id="login-btn">Login</button>
+        </div>
+      </div>
+
+      <!-- Creator Dashboard -->
+      <div id="creator-dashboard" class="page hidden">
+        <h2>Creator Dashboard</h2>
+        <p>Welcome, Creator! Manage all clubs and assign admins.</p>
+        <button onclick="logout()">Logout</button>
+      </div>
+
+      <!-- Admin Dashboard -->
+      <div id="admin-dashboard" class="page hidden">
+        <h2>Admin Dashboard</h2>
+        <p>Welcome, Club Admin! Manage your club’s members and events.</p>
+        <button onclick="logout()">Logout</button>
+      </div>
+
+      <!-- Member Dashboard -->
+      <div id="member-dashboard" class="page hidden">
+        <h2>Member Dashboard</h2>
+        <p>Welcome, Member! Explore clubs and join activities.</p>
+        <button onclick="logout()">Logout</button>
+      </div>
+
+      <!-- Clubs Directory -->
+      <div id="clubs" class="page hidden">
+        <h2 class="section-heading">Clubs Directory</h2>
+        <div class="clubs-grid" id="clubs-grid"></div>
+      </div>
+
+      <!-- Profile -->
+      <div id="profile" class="page hidden">
+        <h2 class="section-heading">My Profile</h2>
+        <div class="card">
+          <img src="assets/profile.png" alt="Profile" class="profile-image">
+          <h3 id="profile-name" class="center">John Doe</h3>
+          <p class="center" id="profile-email">john.doe@email.com</p>
+          <p class="center" id="profile-role">Role: Member</p>
+          <div class="center">
+            <button id="edit-profile">Edit Profile</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>My Clubs</h3>
+          <ul id="member-clubs-list"></ul>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Club Modal -->
+  <div id="club-modal" class="modal">
+    <div class="modal-content">
+      <h3 id="club-modal-title"></h3>
+      <img id="club-modal-image" src="" alt="">
+      <p id="club-modal-description"></p>
+      <div id="club-modal-details"></div>
+      <div class="buttons">
+        <button id="join-club-modal" class="green">Join Club</button>
+        <button id="close-club-modal" class="gray">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Event Modal -->
+  <div id="event-modal" class="modal">
+    <div class="modal-content">
+      <h3 id="event-modal-title"></h3>
+      <p id="event-modal-date"></p>
+      <p id="event-modal-description"></p>
+      <div class="buttons">
+        <button id="rsvp-event-modal">RSVP</button>
+        <button id="close-event-modal" class="gray">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
