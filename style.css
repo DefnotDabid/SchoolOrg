@@ -1,99 +1,461 @@
-/* Reset and Base */
+/* ========================================================== */
+/* 🎨 1. THEME: CSS Custom Properties for Colors and Spacing */
+/* ========================================================== */
+:root {
+    /* Light Mode Colors */
+    --bg-primary: #f0f9ff;
+    --bg-secondary: #e0f2fe;
+    --card-bg: #fff;
+    --text-color: #333;
+    --text-light: #666;
+    --text-heading: #374151;
+    --primary-color: #4f46e5;
+    --primary-dark: #4338ca;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+
+    /* New gradient variables for light mode */
+    --gradient-start: var(--bg-primary);
+    --gradient-end: var(--bg-secondary);
+}
+
+/* Dark Mode Colors */
+[data-theme="dark"] {
+    --bg-primary: #121212;
+    --bg-secondary: #1e1e1e;
+    --card-bg: #2d2d2d;
+    --text-color: #e0e0e0;
+    --text-light: #b0b0b0;
+    --text-heading: #e0e0e0;
+    --primary-color: #a5a2f5;
+    --primary-dark: #8c88e8;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+
+    /* New gradient variables for dark mode */
+    --gradient-start: #1e1e1e;
+    --gradient-end: #121212;
+}
+
+/* Common Variables */
+:root {
+    --white: #fff;
+    --green: #16a34a;
+    --green-dark: #15803d;
+    --gray: #6b7280;
+    --gray-dark: #4b5563;
+
+    --space-xs: 0.5rem;
+    --space-s: 1rem;
+    --space-m: 1.5rem;
+    --space-l: 2rem;
+    --space-xl: 3rem;
+
+    --shadow-sm: 0 1px 3px var(--shadow-color);
+    --shadow-md: 0 2px 8px var(--shadow-color);
+}
+
+/* ============================ */
+/* 📚 2. BASE & UTILITIES */
+/* ============================ */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
-  color: #333;
-  background: linear-gradient(to bottom right, #f0f9ff, #e0f2fe);
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    
+    /* This is the fixed part. We use a single background property.
+        The image is the first layer, and the gradient is the second.
+        The image's URL is what gives it the background, but the color variables
+        in the linear-gradient will change based on the data-theme attribute.
+    */
+    background: url(https://i.pinimg.com/1200x/78/b6/18/78b618e9387e322c227d29f0338b9571.jpg), linear-gradient(to bottom right, var(--gradient-start), var(--gradient-end));
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Nav */
+/*
+    Removed the separate [data-theme="dark"] body selector.
+    The new CSS variables handle the color change automatically.
+*/
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-l) var(--space-s);
+}
+
+.center {
+    text-align: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ====================== */
+/* ⚙️ 3. COMPONENTS */
+/* ====================== */
+
+/* 3.1. Navigation */
 nav {
-  background-color: #4f46e5;
-  color: white;
-  padding: 1rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: var(--space-s);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    transition: background-color 0.3s ease;
 }
 
 nav .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
 }
 
-nav h1 { font-size: 1.5rem; font-weight: bold; }
-nav .nav-links { display: flex; gap: 1rem; }
-nav button { background: none; border: none; color: white; cursor: pointer; padding: .5rem; }
-nav button:hover { color: #e0e7ff; }
+nav h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
 
-.mobile-menu-btn { display: none; }
-.mobile-menu { display: none; position: absolute; top: 100%; right: 0; background: #4338ca; width: 100%; list-style: none; }
-.mobile-menu.active { display: block; }
-.mobile-menu li button { width: 100%; text-align: left; padding: .5rem 1rem; }
+nav .nav-links {
+    display: flex;
+    gap: var(--space-s);
+    align-items: center;
+}
 
-/* Layout */
-main .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
-.page { display: block; }
-.page.hidden { display: none; }
+nav button {
+    background: none;
+    border: none;
+    color: var(--white);
+    cursor: pointer;
+    padding: var(--space-xs);
+    transition: color 0.2s ease-in-out;
+}
 
-/* Cards */
+nav button:hover {
+    color: var(--tertiary-color);
+}
+
+.mobile-menu-btn {
+    display: none;
+}
+
+.mobile-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    list-style: none;
+    background: var(--primary-dark);
+    box-shadow: var(--shadow-md);
+    z-index: 10;
+}
+
+.mobile-menu.active {
+    display: block;
+}
+
+.mobile-menu li button {
+    width: 100%;
+    text-align: left;
+    padding: var(--space-s);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.theme-toggle-btn {
+    font-size: 1.2rem;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+/* 3.2. Pages */
+.page {
+    display: block;
+}
+
+.page.hidden {
+    display: none;
+}
+
+/* 3.3. Cards */
 .card {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  margin-bottom: 1rem;
-  transition: transform .2s;
+    background: var(--card-bg);
+    padding: var(--space-m);
+    border-radius: 8px;
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--space-s);
+    transition: transform 0.2s ease-in-out, background-color 0.3s ease;
 }
-.card:hover { transform: translateY(-2px); }
-.card img { width: 100%; height: 200px; object-fit: cover; border-radius: 4px; margin-bottom: 1rem; }
-.card h3 { font-size: 1.25rem; font-weight: bold; margin-bottom: .5rem; }
-.card p { color: #666; margin-bottom: .5rem; }
 
-/* Grid */
-.dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
-@media (min-width: 768px) { .dashboard-grid { grid-template-columns: repeat(3,1fr); } }
-.clubs-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
-@media (min-width: 768px) { .clubs-grid { grid-template-columns: repeat(2,1fr); } }
-@media (min-width: 1024px) { .clubs-grid { grid-template-columns: repeat(3,1fr); } }
+.card:hover {
+    transform: translateY(-2px);
+}
 
-/* Buttons */
-button { background: #4f46e5; color: white; border: none; padding: .5rem 1rem; border-radius: 4px; cursor: pointer; font-size: .9rem; transition: background .2s; }
-button:hover { background: #4338ca; }
-button.green { background: #16a34a; }
-button.green:hover { background: #15803d; }
-button.gray { background: #6b7280; }
-button.gray:hover { background: #4b5563; }
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: var(--space-s);
+}
 
-/* Headings */
-h2 { font-size: 2rem; font-weight: bold; margin-bottom: 1.5rem; color: #374151; }
-.section-heading { color: #4f46e5; }
+.card h3 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: var(--space-xs);
+    color: var(--text-color);
+    transition: color 0.3s ease;
+}
 
-/* Announcements */
-#announcements-list { list-style: none; }
-#announcements-list li { padding: .5rem 0; border-bottom: 1px solid #e5e7eb; }
+.card p {
+    color: var(--text-light);
+    margin-bottom: var(--space-xs);
+    transition: color 0.3s ease;
+}
 
-/* Profile */
-.profile-image { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin: 0 auto 1rem; }
-.center { text-align: center; }
+/* 3.4. Grids */
+.dashboard-grid,
+.clubs-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-s);
+}
 
-/* Modals */
-.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; }
-.modal.active { display: flex; }
-.modal-content { background: white; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.2); max-width: 400px; width: 90%; padding: 2rem; max-height: 80%; overflow-y: auto; }
-.modal img { width: 100%; height: 200px; object-fit: cover; border-radius: 4px; margin-bottom: 1rem; }
-.modal .buttons { display: flex; gap: 1rem; margin-top: 1rem; }
+@media (min-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 
-/* Responsive */
+    .clubs-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .clubs-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* 3.5. Buttons */
+button {
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: var(--space-xs) var(--space-s);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s ease-in-out, transform 0.1s ease-in-out;
+}
+
+button:hover {
+    background: var(--primary-dark);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+button.green {
+    background: var(--green);
+}
+
+button.green:hover {
+    background: var(--green-dark);
+}
+
+button.gray {
+    background: var(--gray);
+}
+
+button.gray:hover {
+    background: var(--gray-dark);
+}
+
+button.disabled {
+    cursor: not-allowed;
+    background-color: #cccccc;
+}
+
+/* 3.6. Headings */
+h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: var(--space-m);
+    color: var(--text-heading);
+    transition: color 0.3s ease;
+}
+
+.section-heading {
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+}
+
+/* 3.7. Announcements */
+#announcements-list {
+    list-style: none;
+}
+
+#announcements-list li {
+    padding: var(--space-xs) 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* 3.8. Profile */
+.profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto var(--space-s);
+}
+
+/* 3.9. Modals */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px var(--shadow-color);
+    max-width: 400px;
+    width: 90%;
+    padding: var(--space-l);
+    max-height: 80%;
+    overflow-y: auto;
+    transition: background-color 0.3s ease;
+}
+
+.modal-content img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: var(--space-s);
+}
+
+.modal .buttons {
+    display: flex;
+    gap: var(--space-s);
+    margin-top: var(--space-s);
+    justify-content: flex-end;
+}
+
+/* 3.10 Login Page Input Fields */
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: var(--bg-primary);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(79, 70, 229, 0.5);
+}
+
+/* =================== */
+/* 📱 4. RESPONSIVENESS */
+/* =================== */
 @media (max-width: 767px) {
-  nav .nav-links { display: none; }
-  .mobile-menu-btn { display: block; }
-  .modal-content { width: 95%; padding: 1rem; }
+    nav .nav-links {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: var(--space-m);
+    }
+}
+/* ========================== */
+/* 📅 5. CALENDAR STYLES */
+/* ========================== */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-s);
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--text-heading);
+}
+
+.calendar-header button {
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: var(--space-xs) var(--space-s);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+.calendar-header button:hover {
+    background: var(--primary-dark);
+}
+
+.calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    background: var(--card-bg);
+    box-shadow: var(--shadow-sm);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.calendar-table th,
+.calendar-table td {
+    padding: var(--space-xs);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.calendar-table th {
+    background: var(--primary-color);
+    color: var(--white);
+    font-weight: bold;
+}
+
+.calendar-table td.today {
+    background-color: var(--green);
+    color: var(--white);
+    font-weight: bold;
+    border-radius: 50%;
 }
