@@ -7,25 +7,28 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Navigation -->
+
   <nav>
     <div class="container">
       <h1>ClubHub</h1>
       <div class="nav-links">
-        <button id="dashboard-btn">Dashboard</button>
-        <button id="clubs-btn">Clubs Directory</button>
-        <button id="profile-btn">My Profile</button>
+        <button id="dashboard-btn" class="nav-link hidden">Dashboard</button>
+        <button id="clubs-btn" class="nav-link hidden">Clubs Directory</button>
+        <button id="profile-btn" class="nav-link hidden">My Profile</button>
+        <button id="theme-toggle-btn">
+          <span class="light-mode-icon">☀️</span>
+          <span class="dark-mode-icon hidden">🌙</span>
+        </button>
       </div>
-      <button id="mobile-menu-btn" class="mobile-menu-btn">☰</button>
+      <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle mobile menu">☰</button>
       <ul id="mobile-menu" class="mobile-menu">
-        <li><button id="mobile-dashboard-btn">Dashboard</button></li>
-        <li><button id="mobile-clubs-btn">Clubs Directory</button></li>
-        <li><button id="mobile-profile-btn">My Profile</button></li>
+        <li><button id="mobile-dashboard-btn" class="nav-link hidden">Dashboard</button></li>
+        <li><button id="mobile-clubs-btn" class="nav-link hidden">Clubs Directory</button></li>
+        <li><button id="mobile-profile-btn" class="nav-link hidden">My Profile</button></li>
       </ul>
     </div>
   </nav>
 
-  <!-- Main Container -->
   <main>
     <div class="container">
 
@@ -41,23 +44,95 @@
 
       <!-- Creator Dashboard -->
       <div id="creator-dashboard" class="page hidden">
-        <h2>Creator Dashboard</h2>
-        <p>Welcome, Creator! Manage all clubs and assign admins.</p>
-        <button onclick="logout()">Logout</button>
+        <h2 class="section-heading">Creator Dashboard</h2>
+        <p>Welcome, Creator! Here you can manage all clubs and assign admins.</p>
+
+        <div class="dashboard-grid">
+          <div class="card">
+            <h3>Total Clubs</h3>
+            <p id="total-clubs-count"></p>
+            <button id="creator-view-clubs" class="green">View All Clubs</button>
+          </div>
+          <div class="card">
+    <h3>Quick Actions</h3>
+    <button class="green">Create New Club</button>
+    <button id="post-announcement-btn" class="green">Post Announcement</button>
+    <button>Manage Admins</button>
+</div>
+          <div class="card">
+            <h3>Total Members</h3>
+            <p id="total-members-count"></p>
+            <button id="creator-view-members">View All Members</button>
+          </div>
+          <div class="card">
+            <h3>Pending Requests</h3>
+            <p id="pending-requests-count">0</p>
+            <button>Review Requests</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Quick Actions</h3>
+          <button class="green">Create New Club</button>
+          <button>Manage Admins</button>
+        </div>
+
+        <button class="logout-btn gray">Logout</button>
       </div>
 
       <!-- Admin Dashboard -->
       <div id="admin-dashboard" class="page hidden">
-        <h2>Admin Dashboard</h2>
+        <h2 class="section-heading">Admin Dashboard</h2>
         <p>Welcome, Club Admin! Manage your club’s members and events.</p>
-        <button onclick="logout()">Logout</button>
+
+        <div class="dashboard-grid">
+          <div class="card">
+            <h3 id="admin-club-name"></h3>
+            <p><strong>Members:</strong> <span id="admin-club-members"></span></p>
+            <p><strong>Events:</strong> <span id="admin-club-events"></span></p>
+            <button>Manage Club</button>
+          </div>
+          <div class="card">
+            <h3>Quick Actions</h3>
+            <button class="green">Create New Event</button>
+            <button>Post Announcement</button>
+          </div>
+          <div class="card">
+            <h3>Recent Announcements</h3>
+            <ul id="admin-announcements-list"></ul>
+          </div>
+        </div>
+
+        <button class="logout-btn gray">Logout</button>
       </div>
 
       <!-- Member Dashboard -->
       <div id="member-dashboard" class="page hidden">
-        <h2>Member Dashboard</h2>
+        <h2 class="section-heading">Member Dashboard</h2>
         <p>Welcome, Member! Explore clubs and join activities.</p>
-        <button onclick="logout()">Logout</button>
+
+        <div class="dashboard-grid">
+          <div class="card">
+            <h3>My Clubs</h3>
+            <ul id="member-dashboard-clubs-list"></ul>
+            <button id="member-view-clubs">View All Clubs</button>
+          </div>
+          <div class="card">
+            <h3>Upcoming Events</h3>
+            <ul id="member-events-list"></ul>
+            <button id="open-calendar">View Calendar</button>
+          </div>
+          <div class="card">
+            <h3>Recent Announcements</h3>
+            <ul id="member-announcements-list"></ul>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Membership Fees</h3>
+          <p>Your current fee is: **$25.00**</p>
+          <button id="payment-btn" class="green">Make a Payment</button>
+        </div>
+        <button class="logout-btn gray">Logout</button>
       </div>
 
       <!-- Clubs Directory -->
@@ -71,18 +146,89 @@
         <h2 class="section-heading">My Profile</h2>
         <div class="card">
           <img src="assets/profile.png" alt="Profile" class="profile-image">
-          <h3 id="profile-name" class="center">John Doe</h3>
-          <p class="center" id="profile-email">john.doe@email.com</p>
-          <p class="center" id="profile-role">Role: Member</p>
+          <h3 id="profile-name" class="center"></h3>
+          <p class="center" id="profile-email"></p>
+          <p class="center" id="profile-role"></p>
           <div class="center">
-            <button id="edit-profile">Edit Profile</button>
+            <button id="edit-profile" disabled>Edit Profile</button>
           </div>
         </div>
         <div class="card">
           <h3>My Clubs</h3>
           <ul id="member-clubs-list"></ul>
         </div>
+        <button class="logout-btn gray">Logout</button>
       </div>
+
+      <!-- Payment Page -->
+      <div id="payment-page" class="page hidden">
+        <h2 class="section-heading">Make a Payment</h2>
+        <div class="card">
+          <label for="payment-amount">Amount:</label>
+          <input type="text" id="payment-amount" value="25.00" readonly><br><br>
+
+          <label for="payment-method">Payment Method:</label>
+          <select id="payment-method">
+            <option value="card">Credit/Debit Card</option>
+            <option value="gcash">GCash</option>
+            <option value="paypal">PayPal</option>
+            <option value="paymaya">PayMaya</option>
+          </select><br><br>
+
+          <!-- Card -->
+          <div id="card-fields">
+            <label for="card-number">Card Number:</label>
+            <input type="text" id="card-number" placeholder="**** **** **** ****"><br><br>
+            <label for="expiry-date">Expiry Date:</label>
+            <input type="text" id="expiry-date" placeholder="MM/YY"><br><br>
+            <label for="cvv">CVV:</label>
+            <input type="text" id="cvv" placeholder="***"><br><br>
+          </div>
+
+          <!-- GCash -->
+          <div id="gcash-fields" class="hidden">
+            <label for="gcash-number">GCash Number:</label>
+            <input type="text" id="gcash-number" placeholder="09XXXXXXXXX"><br><br>
+          </div>
+
+          <!-- PayPal -->
+          <div id="paypal-fields" class="hidden">
+            <label for="paypal-email">PayPal Email:</label>
+            <input type="email" id="paypal-email" placeholder="example@paypal.com"><br><br>
+          </div>
+
+          <!-- PayMaya -->
+          <div id="paymaya-fields" class="hidden">
+            <label for="paymaya-number">PayMaya Number:</label>
+            <input type="text" id="paymaya-number" placeholder="09XXXXXXXXX"><br><br>
+          </div>
+
+          <button id="process-payment-btn" class="green">Process Payment</button>
+          <button id="cancel-payment-btn" class="gray">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Calendar Page -->
+      <div id="calendar-page" class="page hidden">
+        <h2 class="section-heading">Calendar</h2>
+        <div class="card">
+          <div class="calendar-header">
+            <button id="prev-month">◀</button>
+            <span id="month-year"></span>
+            <button id="next-month">▶</button>
+          </div>
+          <table class="calendar-table">
+            <thead>
+              <tr>
+                <th>Sun</th><th>Mon</th><th>Tue</th>
+                <th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th>
+              </tr>
+            </thead>
+            <tbody id="calendar-body"></tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
   </main>
 
@@ -100,18 +246,16 @@
     </div>
   </div>
 
-  <!-- Event Modal -->
-  <div id="event-modal" class="modal">
+  <div id="announcement-modal" class="modal">
     <div class="modal-content">
-      <h3 id="event-modal-title"></h3>
-      <p id="event-modal-date"></p>
-      <p id="event-modal-description"></p>
-      <div class="buttons">
-        <button id="rsvp-event-modal">RSVP</button>
-        <button id="close-event-modal" class="gray">Close</button>
-      </div>
+        <h3>New Announcement</h3>
+        <textarea id="announcement-text" placeholder="Write your announcement here..." rows="4"></textarea>
+        <div class="buttons">
+            <button id="submit-announcement-btn" class="green">Post</button>
+            <button id="close-announcement-modal" class="gray">Cancel</button>
+        </div>
     </div>
-  </div>
+</div>
 
   <script src="script.js"></script>
 </body>
