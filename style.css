@@ -1,3 +1,48 @@
+/* Add to the top of your existing CSS file */
+:root {
+  /* Dark Mode Variables */
+  --bg-color: linear-gradient(135deg, #1a1c2c, #232946, #0f2027);
+  --text-color: #e0f2ff;
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --card-shadow: rgba(0, 0, 0, 0.3);
+  --primary-color: #4cc9f0;
+  --secondary-color: #4361ee;
+  --nav-bg: rgba(0, 64, 128, 0.7);
+  --nav-shadow: rgba(0, 0, 0, 0.25);
+  --btn-hover-bg: linear-gradient(45deg, #4361ee, #3a0ca3);
+  --btn-hover-shadow: #4cc9f0;
+  --gray-btn-bg: rgba(200, 200, 200, 0.15);
+  --modal-bg: rgba(255, 255, 255, 0.1);
+  --modal-text: #fff;
+  --table-hover-bg: rgba(76, 201, 240, 0.2);
+}
+
+.light-mode {
+  /* Light Mode Variables */
+  --bg-color: #f0f2f5;
+  --text-color: #1a1c2c;
+  --card-bg: #ffffff;
+  --card-shadow: rgba(0, 0, 0, 0.1);
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --nav-bg: rgba(255, 255, 255, 0.9);
+  --nav-shadow: rgba(0, 0, 0, 0.1);
+  --btn-hover-bg: linear-gradient(45deg, #007bff, #0056b3);
+  --btn-hover-shadow: #007bff;
+  --gray-btn-bg: rgba(200, 200, 200, 0.2);
+  --modal-bg: rgba(255, 255, 255, 0.95);
+  --modal-text: #1a1c2c;
+  --table-hover-bg: rgba(0, 123, 255, 0.1);
+}
+
+.card {
+    background-color: var(--card-background); /* assuming you have this */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px; /* This is the new line */
+    margin-bottom: 20px; /* Optional: adds space between cards */
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -7,10 +52,10 @@
 
 body {
   min-height: 100vh;
-  background: linear-gradient(135deg, #1a1c2c, #232946, #0f2027);
+  background: var(--bg-color);
   background-size: 400% 400%;
   animation: bgAnimation 15s ease infinite;
-  color: #e0f2ff;
+  color: var(--text-color);
   display: flex;
   flex-direction: column;
 }
@@ -37,8 +82,8 @@ body {
 ==================================*/
 nav {
   backdrop-filter: blur(12px);
-  background: rgba(0, 64, 128, 0.7);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  background: var(--nav-bg);
+  box-shadow: 0 4px 20px var(--nav-shadow);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -54,7 +99,7 @@ nav .container {
 nav h1 {
   font-size: 1.8rem;
   font-weight: bold;
-  color: #4cc9f0;
+  color: var(--primary-color);
   letter-spacing: 2px;
   text-transform: uppercase;
 }
@@ -63,7 +108,7 @@ nav h1 {
 .mobile-menu button {
   background: transparent;
   border: none;
-  color: #f5faff;
+  color: var(--text-color);
   font-size: 1rem;
   margin-left: 15px;
   cursor: pointer;
@@ -74,9 +119,9 @@ nav h1 {
 
 .nav-links button:hover,
 .mobile-menu button:hover {
-  background: linear-gradient(45deg, #4361ee, #4cc9f0);
+  background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
   color: #fff;
-  box-shadow: 0 0 12px #4cc9f0;
+  box-shadow: 0 0 12px var(--primary-color);
 }
 
 .mobile-menu-btn {
@@ -104,8 +149,8 @@ nav h1 {
   margin: 40px 0 20px;
   font-size: 2.2rem;
   font-weight: 700;
-  color: #4cc9f0;
-  text-shadow: 0 0 10px rgba(76, 201, 240, 0.8);
+  color: var(--primary-color);
+  text-shadow: 0 0 10px var(--card-shadow);
   letter-spacing: 1px;
 }
 
@@ -113,19 +158,19 @@ nav h1 {
    Cards
 ==================================*/
 .card {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--card-bg);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 25px;
   margin: 20px 0;
-  color: #f5faff;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  color: var(--text-color);
+  box-shadow: 0 8px 25px var(--card-shadow);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(76, 201, 240, 0.4);
+  box-shadow: 0 10px 30px rgba(var(--primary-color), 0.4);
 }
 
 .center {
@@ -150,18 +195,18 @@ button:hover {
 }
 
 button.green {
-  background: linear-gradient(45deg, #4cc9f0, #4361ee);
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
   color: #fff;
 }
 
 button.green:hover {
-  background: linear-gradient(45deg, #4361ee, #3a0ca3);
-  box-shadow: 0 0 12px #4cc9f0;
+  background: var(--btn-hover-bg);
+  box-shadow: 0 0 12px var(--btn-hover-shadow);
 }
 
 button.gray {
-  background: rgba(200, 200, 200, 0.15);
-  color: #f5faff;
+  background: var(--gray-btn-bg);
+  color: var(--text-color);
 }
 
 button.gray:hover {
@@ -199,8 +244,8 @@ button.gray:hover {
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  border: 3px solid #4cc9f0;
-  box-shadow: 0 0 15px rgba(76, 201, 240, 0.6);
+  border: 3px solid var(--primary-color);
+  box-shadow: 0 0 15px rgba(var(--primary-color), 0.6);
 }
 
 /* ===============================
@@ -218,14 +263,14 @@ button.gray:hover {
 }
 
 .modal-content {
-  background: rgba(255,255,255,0.1);
+  background: var(--modal-bg);
   backdrop-filter: blur(15px);
   padding: 30px;
   border-radius: 15px;
   max-width: 500px;
   width: 90%;
-  color: #fff;
-  box-shadow: 0 4px 25px rgba(0,0,0,0.6);
+  color: var(--modal-text);
+  box-shadow: 0 4px 25px var(--card-shadow);
   animation: fadeIn 0.3s ease;
 }
 
@@ -242,7 +287,7 @@ button.gray:hover {
   justify-content: space-between;
   align-items: center;
   font-weight: 600;
-  color: #4cc9f0;
+  color: var(--primary-color);
   margin-bottom: 15px;
 }
 
@@ -258,7 +303,7 @@ button.gray:hover {
 }
 
 .calendar-table td:hover {
-  background: rgba(76, 201, 240, 0.2);
+  background: var(--table-hover-bg);
   cursor: pointer;
 }
 
