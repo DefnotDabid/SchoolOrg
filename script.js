@@ -2,18 +2,17 @@
 /* 💻 App State and Dummy Database */
 /* ========================================================== */
 
-// Centralized state to manage the application's data
 const appState = {
     user: null,
 };
 
-// Dummy data to simulate a database.
 const database = {
     users: [
         { id: 1, email: "creator@example.com", password: "123", role: "Creator", clubs: [] },
         { id: 2, email: "admin@example.com", password: "123", role: "Admin", clubs: [1], adminOf: 1 },
         { id: 3, email: "member@example.com", password: "123", role: "Member", clubs: [2] },
         { id: 4, email: "mary@example.com", password: "123", role: "Member", clubs: [1, 2] },
+        { id: 5, email: "john@example.com", password: "123", role: "Member", clubs: [] }
     ],
     clubs: [
         {
@@ -22,7 +21,7 @@ const database = {
             image: "assets/robotics.jpg",
             description: "Building the future, one robot at a time. The Robotics Club offers hands-on experience in engineering, programming, and design, culminating in exciting competitions.",
             members: [2, 4], // User IDs
-            adminId: 2, // New field to identify the admin
+            adminId: 2, // User ID of the admin
             announcements: [
                 { date: "2025-10-20", text: "New meeting this Friday at 4 PM in Lab C." },
                 { date: "2025-10-18", text: "Mandatory practice session this Saturday at 10 AM." },
@@ -37,7 +36,7 @@ const database = {
             image: "assets/art.jpg",
             description: "A community for creative expression and artistic exploration. The Art Guild hosts workshops, gallery visits, and showcases for artists of all skill levels.",
             members: [3, 4],
-            adminId: 3, // New field to identify the admin
+            adminId: 3, // User ID of the admin
             announcements: [
                 { date: "2025-10-18", text: "Portfolio review session next Tuesday." },
                 { date: "2025-10-15", text: "Guest artist lecture on Friday." },
@@ -57,11 +56,9 @@ const database = {
             events: [],
         },
     ],
-    // New array to store general announcements
     generalAnnouncements: [
         { date: "2025-10-25", text: "Welcome to ClubHub! Explore and join your favorite organizations." },
     ],
-    // New array to store general events
     generalEvents: [
         { title: "Student Orientation", date: "2025-10-26", description: "Orientation for all new members.", clubId: null },
     ],
@@ -90,7 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
     setupEventListeners();
     renderClubs();
     initTheme();
-    // Initialize the calendar on page load for the first time
     initCalendar();
 });
 
@@ -207,14 +203,12 @@ function renderMemberDashboard() {
     memberEventsList.innerHTML = "";
     memberAnnouncementsList.innerHTML = "";
 
-    // Add general announcements
     database.generalAnnouncements.forEach(ann => {
         const liAnn = document.createElement("li");
         liAnn.textContent = `[General]: ${ann.text}`;
         memberAnnouncementsList.appendChild(liAnn);
     });
 
-    // Get a combined list of all events
     const allEvents = [...database.generalEvents];
     const userClubs = database.clubs.filter(club => appState.user.clubs.includes(club.id));
 
@@ -224,7 +218,6 @@ function renderMemberDashboard() {
             liClub.textContent = club.name;
             memberClubsList.appendChild(liClub);
 
-            // Add club-specific events and announcements
             allEvents.push(...club.events);
             club.announcements.forEach(ann => {
                 const liAnn = document.createElement("li");
@@ -233,7 +226,6 @@ function renderMemberDashboard() {
             });
         });
 
-        // Sort events by date and display them
         allEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
         allEvents.forEach(event => {
             const liEvent = document.createElement("li");
@@ -253,14 +245,18 @@ function renderMemberDashboard() {
 
 function renderProfile() {
     if (!appState.user) return;
-    document.getElementById("profile-name").textContent = appState.user.email.split("@")[0];
-    document.getElementById("profile-email").textContent = appState.user.email;
-    document.getElementById("profile-role").textContent = `Role: ${appState.user.role}`;
+    const user = appState.user;
+    const adminClub = database.clubs.find(club => club.adminId === user.id);
+    const roleText = user.role === 'Admin' && adminClub ? `Role: Admin (${adminClub.name})` : `Role: ${user.role}`;
+
+    document.getElementById("profile-name").textContent = user.email.split("@")[0];
+    document.getElementById("profile-email").textContent = user.email;
+    document.getElementById("profile-role").textContent = roleText;
 
     const memberClubsList = document.getElementById("member-clubs-list");
     memberClubsList.innerHTML = "";
 
-    const userClubs = database.clubs.filter(club => appState.user.clubs.includes(club.id));
+    const userClubs = database.clubs.filter(club => user.clubs.includes(club.id));
     if (userClubs.length > 0) {
         userClubs.forEach(club => {
             const li = document.createElement("li");
@@ -374,6 +370,120 @@ function postAnnouncement() {
 }
 
 /* ========================================================== */
+/* 🆕 Creator Member Management */
+/* ========================================================== */
+function showManageMembersModal() {
+    const modal = document.getElementById("manage-members-modal");
+    modal.classList.add("active");
+    renderMemberManagementLists();
+}
+
+function renderMemberManagementLists() {
+    const managementListContainer = document.getElementById("member-management-list");
+    managementListContainer.innerHTML = '';
+    
+    // Render list of members in each club with remove/assign buttons
+    database.clubs.forEach(club => {
+        const clubDiv = document.createElement('div');
+        clubDiv.classList.add('club-management-section');
+        clubDiv.innerHTML = `<h4>${club.name}</h4>`;
+        
+        const ul = document.createElement('ul');
+        club.members.forEach(memberId => {
+            const memberUser = database.users.find(u => u.id === memberId);
+            if (memberUser) {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span>${memberUser.email}</span>
+                    <button class="remove-member-btn" data-club-id="${club.id}" data-member-id="${memberUser.id}">Remove</button>
+                    <button class="assign-admin-btn" data-club-id="${club.id}" data-member-id="${memberUser.id}">Assign as Admin</button>
+                `;
+                ul.appendChild(li);
+            }
+        });
+        clubDiv.appendChild(ul);
+        managementListContainer.appendChild(clubDiv);
+    });
+
+    // Render list of users who are not in any club, with add buttons
+    const unassignedUsers = database.users.filter(user => user.clubs.length === 0 && user.role !== 'Creator');
+    const newMemberSelect = document.getElementById('new-member-select');
+    const targetClubSelect = document.getElementById('target-club-select');
+
+    newMemberSelect.innerHTML = unassignedUsers.map(user => `<option value="${user.id}">${user.email}</option>`).join('');
+    targetClubSelect.innerHTML = database.clubs.map(club => `<option value="${club.id}">${club.name}</option>`).join('');
+}
+
+function handleMemberAction(event) {
+    if (event.target.classList.contains('remove-member-btn')) {
+        const clubId = parseInt(event.target.dataset.clubId);
+        const memberId = parseInt(event.target.dataset.memberId);
+        removeMember(clubId, memberId);
+    } else if (event.target.classList.contains('assign-admin-btn')) {
+        const clubId = parseInt(event.target.dataset.clubId);
+        const memberId = parseInt(event.target.dataset.memberId);
+        assignAdmin(clubId, memberId);
+    }
+}
+
+function removeMember(clubId, memberId) {
+    const club = database.clubs.find(c => c.id === clubId);
+    const user = database.users.find(u => u.id === memberId);
+
+    if (club && user) {
+        const clubIndex = user.clubs.indexOf(clubId);
+        if (clubIndex > -1) {
+            user.clubs.splice(clubIndex, 1);
+        }
+        const memberIndex = club.members.indexOf(memberId);
+        if (memberIndex > -1) {
+            club.members.splice(memberIndex, 1);
+        }
+        if (club.adminId === memberId) {
+            club.adminId = null;
+        }
+        user.role = 'Member';
+        alert(`User ${user.email} removed from ${club.name}.`);
+        renderMemberManagementLists();
+        renderApp();
+    }
+}
+
+function assignAdmin(clubId, memberId) {
+    const club = database.clubs.find(c => c.id === clubId);
+    const user = database.users.find(u => u.id === memberId);
+    
+    if (club && user) {
+        const currentAdmin = database.users.find(u => u.id === club.adminId);
+        if (currentAdmin) {
+            currentAdmin.role = 'Member';
+        }
+        club.adminId = user.id;
+        user.role = 'Admin';
+        
+        alert(`User ${user.email} is now the admin of ${club.name}.`);
+        renderMemberManagementLists();
+        renderApp();
+    }
+}
+
+function addMemberFromSelect() {
+    const userId = parseInt(document.getElementById('new-member-select').value);
+    const clubId = parseInt(document.getElementById('target-club-select').value);
+
+    const user = database.users.find(u => u.id === userId);
+    const club = database.clubs.find(c => c.id === clubId);
+
+    if (user && club) {
+        user.clubs.push(clubId);
+        club.members.push(userId);
+        alert(`User ${user.email} added to ${club.name}.`);
+        renderMemberManagementLists();
+        renderApp();
+    }
+}
+
+/* ========================================================== */
 /* 📅 Calendar Functionality */
 /* ========================================================== */
 
@@ -414,12 +524,10 @@ function renderCalendar(month, year) {
                 cell.textContent = date;
                 const currentDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
                 
-                // Highlight today's date
                 if (date === new Date().getDate() && year === new Date().getFullYear() && month === new Date().getMonth()) {
                     cell.classList.add("today");
                 }
 
-                // Add event markers
                 const dayEvents = allEvents.filter(event => event.date === currentDate);
                 if (dayEvents.length > 0) {
                     const eventIcon = document.createElement("span");
@@ -440,7 +548,6 @@ function renderCalendar(month, year) {
 /* ========================================================== */
 /* 🆕 Creator Event Submission */
 /* ========================================================== */
-
 function showEventModal() {
     const clubSelect = document.getElementById("event-club-select");
     clubSelect.innerHTML = "<option value='general'>General</option>";
@@ -491,29 +598,27 @@ function postEvent() {
 /* 🌙 Dark Mode Functionality */
 /* ========================================================== */
 function initTheme() {
-    const savedTheme = localStorage.getItem("clubhub_theme") || "light";
-    document.body.setAttribute("data-theme", savedTheme);
-    updateThemeIcons(savedTheme);
-}
+    const body = document.body;
+    const themeToggleBtn = document.getElementById("theme-toggle-btn");
 
-function toggleTheme() {
-    const currentTheme = document.body.getAttribute("data-theme");
-    const newTheme = currentTheme === "dark" ? "light" : "dark";
-    document.body.setAttribute("data-theme", newTheme);
-    localStorage.setItem("clubhub_theme", newTheme);
-    updateThemeIcons(newTheme);
-}
+    const saveThemePreference = (theme) => {
+        localStorage.setItem("clubhub_theme", theme);
+    };
 
-function updateThemeIcons(theme) {
-    const lightIcon = document.querySelector(".light-mode-icon");
-    const darkIcon = document.querySelector(".dark-mode-icon");
-    if (theme === "dark") {
-        lightIcon.classList.add("hidden");
-        darkIcon.classList.remove("hidden");
-    } else {
-        lightIcon.classList.remove("hidden");
-        darkIcon.classList.add("hidden");
-    }
+    const applyTheme = (theme) => {
+        if (theme === "light") {
+            body.classList.add("light-mode");
+            document.querySelector('.light-mode-icon').classList.remove('hidden');
+            document.querySelector('.dark-mode-icon').classList.add('hidden');
+        } else {
+            body.classList.remove("light-mode");
+            document.querySelector('.light-mode-icon').classList.add('hidden');
+            document.querySelector('.dark-mode-icon').classList.remove('hidden');
+        }
+    };
+
+    const savedTheme = localStorage.getItem("clubhub_theme") || "dark";
+    applyTheme(savedTheme);
 }
 
 /* ========================================================== */
@@ -598,9 +703,6 @@ function setupEventListeners() {
         document.getElementById("mobile-menu").classList.toggle("active");
     });
 
-    // Theme toggle
-    document.getElementById("theme-toggle-btn").addEventListener("click", toggleTheme);
-
     // View clubs buttons
     document.getElementById("creator-view-clubs").addEventListener("click", () => showPage("clubs"));
     document.getElementById("member-view-clubs").addEventListener("click", () => showPage("clubs"));
@@ -621,34 +723,37 @@ function setupEventListeners() {
     document.getElementById("cancel-payment-btn").addEventListener("click", () => showPage("member-dashboard"));
     setupPaymentFields();
 
-    // New Event Listeners for Announcements and Calendar
+    // Announcements & Events
     document.getElementById("post-announcement-btn").addEventListener("click", showAnnouncementModal);
     document.getElementById("submit-announcement-btn").addEventListener("click", postAnnouncement);
     document.getElementById("close-announcement-modal").addEventListener("click", () => {
         document.getElementById("announcement-modal").classList.remove("active");
     });
-
     document.getElementById("open-calendar").addEventListener("click", () => {
         showPage("calendar-page");
         renderCalendar(currentMonth, currentYear);
     });
-
     document.getElementById("prev-month").addEventListener("click", () => {
         currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
-        currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
+        currentMonth = (currentMonth === 0) ? 11 : currentMonth + 1;
         renderCalendar(currentMonth, currentYear);
     });
-
     document.getElementById("next-month").addEventListener("click", () => {
         currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
         currentMonth = (currentMonth === 11) ? 0 : currentMonth + 1;
         renderCalendar(currentMonth, currentYear);
     });
 
-    // Event Creation for Creators
-    document.getElementById("create-event-btn").addEventListener("click", showEventModal);
-    document.getElementById("post-event-btn").addEventListener("click", postEvent);
-    document.getElementById("cancel-event-btn").addEventListener("click", () => {
-        document.getElementById("event-modal").classList.remove("active");
+    // Creator-specific management
+    document.getElementById("creator-manage-members-btn").addEventListener("click", showManageMembersModal);
+    document.getElementById("close-manage-members-modal").addEventListener("click", () => {
+        document.getElementById("manage-members-modal").classList.remove("active");
+    });
+    // Dynamically created buttons need a listener on a parent container
+    document.getElementById("member-management-list").addEventListener("click", handleMemberAction);
+    document.getElementById("manage-members-modal").addEventListener("click", function(event) {
+        if (event.target.id === 'add-member-btn') {
+            addMemberFromSelect();
+        }
     });
 }
