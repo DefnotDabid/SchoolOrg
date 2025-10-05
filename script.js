@@ -12,22 +12,20 @@ const appState = { user: null };
 const quickAccounts = {
   handler: { username: 'handler', password: 'handler123', role: 'Creator' },
   leader: { username: 'leader', password: 'leader123', role: 'Admin' },
-  member: { username: 'member', password: 'member123', role: 'Member' }
 };
 
 const database = {
   users: [
     { id: 1, email: "creator@example.com", password: "123", role: "Creator", clubs: [] },
     { id: 2, email: "admin@example.com", password: "123", role: "Admin", clubs: [1], adminOf: 1 },
-    { id: 3, email: "member@example.com", password: "123", role: "Member", clubs: [2] },
-    { id: 4, email: "mary@example.com", password: "123", role: "Member", clubs: [1, 2] },
-    { id: 5, email: "john@example.com", password: "123", role: "Member", clubs: [] }
+    { id: 3, email: "mary@example.com", password: "123", role: "Member", clubs: [1, 2] },
+    { id: 4, email: "john@example.com", password: "123", role: "Member", clubs: [] }
   ],
   clubs: [
     {
       id: 1,
       name: "Robotics Club",
-      image: "assets/robotics.jpg",
+      image: "https://mir-s3-cdn-cf.behance.net/project_modules/hd/bb908f12412471.56268abbb66ed.png",
       description: "Building the future, one robot at a time. The Robotics Club offers hands-on experience in engineering, programming, and design, culminating in exciting competitions.",
       members: [2,4],
       adminId: 2,
@@ -40,7 +38,7 @@ const database = {
     {
       id: 2,
       name: "Art Guild",
-      image: "assets/art.jpg",
+      image: "https://i0.wp.com/www.palmerlibrary.org/wp-content/uploads/2024/06/Art-Club.png?fit=1191%2C1073&ssl=1",
       description: "A community for creative expression and artistic exploration. The Art Guild hosts workshops, gallery visits, and showcases for artists of all skill levels.",
       members: [3,4],
       adminId: 3,
@@ -53,7 +51,7 @@ const database = {
     {
       id: 3,
       name: "Photography Club",
-      image: "assets/photography.jpg",
+      image: "https://i.pinimg.com/1200x/14/23/73/142373755470d869b67c30eb1e9dbdc5.jpg",
       description: "Capturing moments and mastering the art of light and shadow. The Photography Club organizes photo walks, editing workshops, and exhibitions.",
       members: [],
       adminId: null,
@@ -525,9 +523,11 @@ function postEvent() {
 /* ========================================================== */
 /* Theme (dark/light) - persisted
 /* ========================================================== */
+// ===== THEME (Dark/Light) =====
 function initTheme() {
   const saved = localStorage.getItem('clubhub_theme') || 'dark';
-  if (saved === 'light') document.body.classList.add('light-mode'); else document.body.classList.remove('light-mode');
+  if (saved === 'light') document.body.classList.add('light-mode');
+  else document.body.classList.remove('light-mode');
   updateThemeIcons(saved);
 }
 
@@ -539,19 +539,19 @@ function toggleTheme() {
 }
 
 function updateThemeIcons(theme) {
-  // the markup uses .sun-icon and .moon-icon
   const sun = document.querySelector('.sun-icon');
   const moon = document.querySelector('.moon-icon');
-  if (sun && moon) {
-    if (theme === 'dark') {
-      sun.style.display = 'none';
-      moon.style.display = 'inline';
-    } else {
-      sun.style.display = 'inline';
-      moon.style.display = 'none';
-    }
+  if (!sun || !moon) return;
+
+  if (theme === 'light') {
+    sun.style.display = 'none';
+    moon.style.display = 'inline';
+  } else {
+    sun.style.display = 'inline';
+    moon.style.display = 'none';
   }
 }
+
 
 /* ========================================================== */
 /* Payments (simple stub)
