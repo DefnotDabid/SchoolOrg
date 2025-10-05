@@ -51,9 +51,42 @@
               <input type="password" id="login-password" name="login-password" required />
             </div>
             <button id="login-btn" class="action-btn primary" type="submit">Login</button>
+            <p style="margin-top:10px;">Don’t have an account? 
+  <button id="goto-signup-btn" type="button" class="action-btn gray">Sign Up</button>
+</p>
+
           </form>
         </div>
       </section>
+
+      <!-- Signup Page -->
+<section id="signup-page" class="page container hidden">
+  <h2 class="section-heading">Create an Account</h2>
+  <div class="card center">
+    <h3>Sign Up</h3>
+    <form id="signup-form">
+      <div class="form-group">
+        <label for="signup-email">Email</label>
+        <input type="email" id="signup-email" name="signup-email" required />
+      </div>
+      <div class="form-group">
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" name="signup-password" required />
+      </div>
+      <div class="form-group">
+        <label for="signup-role">Role</label>
+        <select id="signup-role" name="signup-role">
+          <option value="Member">Member</option>
+        </select>
+      </div>
+      <button id="signup-btn" class="action-btn primary" type="submit">Sign Up</button>
+      <p style="margin-top:10px;">Already have an account? 
+        <button id="goto-login-btn" type="button" class="action-btn gray">Login</button>
+      </p>
+    </form>
+  </div>
+</section>
+
 
       <!-- Welcome hub: still available but no longer forced on every login -->
       <section id="login-dashboard" class="page hidden container">
@@ -98,7 +131,7 @@
       <!-- Admin Dashboard -->
       <section id="admin-dashboard" class="page hidden" aria-live="polite">
         <h2 class="section-heading">Admin Dashboard</h2>
-        <p>Welcome, Club Admin! Manage your club’s members and events.</p>
+        <p>Welcome, Club Admin! Manage your club's members and events.</p>
         <div class="dashboard-grid">
           <div class="card">
             <h3 id="admin-club-name"></h3>
@@ -257,6 +290,10 @@
             <tbody id="calendar-body"></tbody>
           </table>
         </div>
+        <div class="card">
+          <h3>Upcoming Events</h3>
+          <ul id="calendar-events-list"></ul>
+        </div>
       </section>
     </div>
   </main>
@@ -333,6 +370,37 @@
       <div class="modal-actions">
         <button id="post-event-btn" class="action-btn primary" type="button">Post Event</button>
         <button id="cancel-event-btn" class="action-btn secondary" type="button">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Club Modal -->
+  <div id="add-club-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="add-club-modal-title">
+    <div class="modal-content">
+      <h3 id="add-club-modal-title">Create New Club</h3>
+      <form id="add-club-form" novalidate>
+        <div class="form-group">
+          <label for="club-name">Club Name</label>
+          <input type="text" id="club-name" name="club-name" required />
+        </div>
+        <div class="form-group">
+          <label for="club-description">Description</label>
+          <textarea id="club-description" name="club-description" rows="4" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="club-image">Image URL</label>
+          <input type="text" id="club-image" name="club-image" placeholder="assets/club-image.jpg" required />
+        </div>
+        <div class="form-group">
+          <label for="club-admin-select">Assign Admin (optional)</label>
+          <select id="club-admin-select" name="club-admin-select">
+            <option value="">No Admin</option>
+          </select>
+        </div>
+      </form>
+      <div class="modal-actions">
+        <button id="submit-club-btn" class="action-btn primary" type="button">Create Club</button>
+        <button id="cancel-club-btn" class="action-btn secondary" type="button">Cancel</button>
       </div>
     </div>
   </div>
