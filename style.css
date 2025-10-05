@@ -105,6 +105,23 @@ body {
   color: var(--primary-color);
 }
 
+/* Back button styles */
+#back-btn {
+  background: transparent;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-right: 10px;
+}
+
+#back-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
 /* dark-mode button next to logo */
 #theme-toggle-btn {
   background: transparent;
@@ -296,6 +313,27 @@ button.gray {
   z-index: 1000;
 }
 
+#club-modal-image {
+  /* 1. Sizing and Responsiveness */
+  width: 100%;       /* Ensures the image fills the width of the modal content */
+  max-width: 100px;  /* Prevents it from getting too big in wide modals */
+  height: auto;      /* CRUCIAL: Keeps the image from being stretched and maintains aspect ratio */
+  
+  /* 2. Layout and Appearance */
+  display: block;    /* Makes sure 'margin: auto' can center the image */
+  margin: 15px auto; /* Centers the image horizontally and adds spacing */
+  border-radius: 12px; /* Optional: Adds a nice rounded border */
+  object-fit: cover; /* Optional: Ensures the image covers the element box while maintaining its ratio (good if you set a fixed height) */
+}
+
+.club-thumb {
+  width: 100%;        /* Image takes up the full width of its container (the card) */
+  height: 200px;      /* Set a fixed height for visual uniformity across all cards */
+  object-fit: cover;  /* CRUCIAL: Ensures the image covers the 200px height while maintaining its aspect ratio. It will crop the edges if necessary, preventing distortion. */
+  border-radius: 10px 10px 0 0; /* Optional: Rounds the top corners to match the card */
+  margin-bottom: 10px;
+}
+
 .modal.active { display: flex; }
 
 .modal-content {
@@ -329,13 +367,71 @@ button.gray {
 
 .calendar-table th,
 .calendar-table td {
-  padding: 10px;
+  padding: 12px;
   border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.calendar-table th {
+  background: var(--card-bg);
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.calendar-table td {
+  cursor: pointer;
+  position: relative;
+  height: 60px;
+  vertical-align: top;
 }
 
 .calendar-table td:hover {
   background: var(--table-hover-bg);
+}
+
+.calendar-table .today {
+  background: var(--primary-color);
+  color: white;
+  font-weight: bold;
+}
+
+.calendar-table .has-event::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  background: var(--secondary-color);
+  border-radius: 50%;
+}
+
+.calendar-header button {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 1rem;
+}
+
+.calendar-header button:hover {
+  background: var(--secondary-color);
+}
+
+#calendar-events-list {
+  list-style: none;
+  padding: 0;
+}
+
+#calendar-events-list li {
+  padding: 8px;
+  margin: 4px 0;
+  background: var(--card-bg);
+  border-radius: 6px;
+  border-left: 4px solid var(--primary-color);
 }
 
 /* ===============================
