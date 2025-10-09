@@ -1,410 +1,389 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ClubHub - Student Organization Management</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ClubHub - Student Organization Management</title>
+    <link rel="stylesheet" href="Clubhub.css" />
 </head>
 
 <body>
-  <header class="main-header">
-    <div class="container">
-      <div class="logo">
-        <h1>ClubHub</h1>
-        <!-- Dark mode button (left beside logo) -->
-        <button id="theme-toggle-btn" aria-label="Toggle dark mode" type="button">
-          <span class="sun-icon">☀️</span>
-          <span class="moon-icon">🌙</span>
-        </button>
-      </div>
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <h1>ClubHub</h1>
+                <button id="mode-toggle" aria-label="Toggle Dark/Light Mode">
+                    <span class="moon-icon" aria-hidden="false">🌙</span> 
+                    <span class="sun-icon" aria-hidden="true" style="display: none;">☀️</span>
+                </button>
+                </div>
 
-      <nav class="nav-links" role="navigation" aria-label="Primary navigation">
-        <button id="dashboard-btn" class="nav-link hidden" type="button">Dashboard</button>
-        <button id="clubs-btn" class="nav-link hidden" type="button">Clubs Directory</button>
-        <button id="profile-btn" class="nav-link hidden" type="button">My Profile</button>
-      </nav>
+            <nav class="nav-links" aria-label="Main site navigation">
+                <ul role="menubar">
+                    <li role="none"><button id="dashboard-btn" class="nav-link hidden" type="button" role="menuitem">Dashboard</button></li>
+                    <li role="none"><button id="clubs-btn" class="nav-link hidden" type="button" role="menuitem">Clubs Directory</button></li>
+                    <li role="none"><button id="profile-btn" class="nav-link hidden" type="button" role="menuitem">My Profile</button></li>
+                </ul>
+            </nav>
 
-      <!-- Mobile menu toggle -->
-      <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle mobile menu" aria-controls="mobile-menu" aria-expanded="false" type="button">☰</button>
-      <ul id="mobile-menu" class="mobile-menu hidden" aria-hidden="true">
-        <li><button id="mobile-dashboard-btn" class="nav-link hidden" type="button">Dashboard</button></li>
-        <li><button id="mobile-clubs-btn" class="nav-link hidden" type="button">Clubs Directory</button></li>
-        <li><button id="mobile-profile-btn" class="nav-link hidden" type="button">My Profile</button></li>
-      </ul>
-    </div>
-  </header>
 
-  <main>
-    <div class="container">
-      <section id="login-page" class="page container">
-        <h2 class="section-heading">Welcome to ClubHub</h2>
-        <div class="card center">
-          <h3>Login</h3>
-          <form id="login-form">
-            <div class="form-group">
-              <label for="login-email">Email or Username</label>
-              <input type="text" id="login-email" name="login-email" required />
+            <nav id="mobile-menu-nav" class="mobile-menu-nav hidden" aria-label="Mobile navigation">
+                <ul id="mobile-menu" class="mobile-menu" aria-hidden="true">
+                    <li><button id="mobile-dashboard-btn" class="nav-link hidden" type="button">Dashboard</button></li>
+                    <li><button id="mobile-clubs-btn" class="nav-link hidden" type="button">Clubs Directory</button></li>
+                    <li><button id="mobile-profile-btn" class="nav-link hidden" type="button">My Profile</button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            
+            <section id="login-page" class="page container" aria-labelledby="login-heading">
+                <h2 id="login-heading" class="section-heading">Welcome to ClubHub</h2>
+                <article class="card center">
+                    <h3>Login</h3>
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label for="login-email">Email or Username</label>
+                            <input type="text" id="login-email" name="login-email" required autocomplete="username" />
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Password</label>
+                            <input type="password" id="login-password" name="login-password" required autocomplete="current-password" />
+                        </div>
+                        <button id="login-btn" class="action-btn primary" type="submit">Login</button>
+                        <p style="margin-top:10px;">Don’t have an account? 
+                            <button id="goto-signup-btn" type="button" class="action-btn gray">Sign Up</button>
+                        </p>
+                    </form>
+                </article>
+            </section>
+
+            <section id="signup-page" class="page container hidden" aria-labelledby="signup-heading">
+                <h2 id="signup-heading" class="section-heading">Create an Account</h2>
+                <article class="card center">
+                    <h3>Sign Up</h3>
+                    <form id="signup-form">
+                        <div class="form-group">
+                            <label for="signup-email">Email</label>
+                            <input type="email" id="signup-email" name="signup-email" required autocomplete="email" />
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-password">Password</label>
+                            <input type="password" id="signup-password" name="signup-password" required autocomplete="new-password" />
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-role">Role</label>
+                            <select id="signup-role" name="signup-role">
+                                <option value="Member">Member</option>
+                            </select>
+                        </div>
+                        <button id="signup-btn" class="action-btn primary" type="submit">Sign Up</button>
+                        <p style="margin-top:10px;">Already have an account? 
+                            <button id="goto-login-btn" type="button" class="action-btn gray">Login</button>
+                        </p>
+                    </form>
+                </article>
+            </section>
+
+            <section id="login-dashboard" class="page hidden container" aria-labelledby="welcome-heading">
+                <h2 id="welcome-heading" class="section-heading">Login Dashboard</h2>
+                <div class="card center">
+                    <p>Welcome back! You are logged in as: <strong id="userRole"></strong></p>
+                    <nav aria-label="Post-login navigation" style="margin-top:16px;">
+                        <button id="login-goto-dashboard" class="action-btn primary" type="button">Go to Dashboard</button>
+                        <button id="login-view-clubs" class="action-btn" type="button">View Clubs</button>
+                        <button id="login-view-profile" class="action-btn" type="button">My Profile</button>
+                        <button id="logout-btn" class="logout-btn action-btn secondary" type="button">Logout</button>
+                    </nav>
+                </div>
+            </section>
+
+            <section id="admin-dashboard" class="page hidden" aria-live="polite" aria-labelledby="creator-heading">
+                <h2 id="creator-heading" class="section-heading">Creator Dashboard</h2>
+                <p>Welcome, Creator! Here you can manage all clubs and assign admins.</p>
+                <div class="dashboard-grid">
+                    <article class="card">
+                        <h3>Statistics</h3>
+                        <dl> <dt>Total Clubs:</dt>
+                            <dd><span id="total-clubs-count"></span></dd>
+                            <dt>Total Members:</dt>
+                            <dd><span id="total-members-count"></span></dd>
+                        </dl>
+                    </article>
+                    <article class="card">
+                        <h3>Quick Actions</h3>
+                        <nav aria-label="Creator Quick Actions">
+                            <button id="create-club-btn" class="action-btn primary" type="button">Create New Club</button>
+                            <button id="post-announcement-btn" class="action-btn primary" type="button">Post Announcement</button>
+                            <button id="create-event-btn" class="action-btn primary" type="button">Create Event</button>
+                        </nav>
+                    </article>
+                    <article class="card">
+                        <h3>Management Tools</h3>
+                        <nav aria-label="Creator Management Tools">
+                            <button id="creator-view-clubs" class="action-btn" type="button">View All Clubs</button>
+                            <button id="creator-manage-members-btn" class="action-btn" type="button">Manage All Members</button>
+                        </nav>
+                    </article>
+                </div>
+                <button class="logout-btn action-btn secondary" type="button">Logout</button>
+            </section>
+
+            <section id="ClubLeader-dashboard" class="page hidden" aria-live="polite" aria-labelledby="cl-admin-heading">
+                <h2 id="cl-admin-heading" class="section-heading">Admin Dashboard</h2>
+                <p>Welcome, Club Admin! Manage your club's members and events.</p>
+                <div class="dashboard-grid">
+                    <article class="card">
+                        <h3 id="admin-club-name"></h3>
+                        <dl>
+                            <dt>Members:</dt>
+                            <dd><span id="admin-club-members"></span></dd>
+                            <dt>Events:</dt>
+                            <dd><span id="admin-club-events"></span></dd>
+                        </dl>
+                        <button id="admin-manage-club-btn" class="action-btn" type="button">Manage Club</button>
+                    </article>
+                    <article class="card">
+                        <h3>Quick Actions</h3>
+                        <nav aria-label="Admin Quick Actions">
+                            <button id="admin-create-event-btn" class="action-btn primary" type="button">Create New Event</button>
+                            <button id="admin-post-announcement-btn" class="action-btn primary" type="button">Post Announcement</button>
+                        </nav>
+                    </article>
+                    <article class="card">
+                        <h3>Recent Announcements</h3>
+                        <ul id="admin-announcements-list"></ul>
+                    </article>
+                </div>
+                <button class="logout-btn action-btn secondary" type="button">Logout</button>
+            </section>
+
+            <section id="member-dashboard" class="page hidden" aria-live="polite" aria-labelledby="member-heading">
+                <h2 id="member-heading" class="section-heading">Member Dashboard</h2>
+                <p>Welcome, Member! Explore clubs and join activities.</p>
+                <div class="dashboard-grid">
+                    <article class="card">
+                        <h3>My Clubs</h3>
+                        <ul id="member-dashboard-clubs-list"></ul>
+                        <button id="member-view-clubs" class="action-btn" type="button">View All Clubs</button>
+                    </article>
+                    <article class="card">
+                        <h3>Upcoming Events</h3>
+                        <ul id="member-events-list"></ul>
+                        <button id="open-calendar" class="action-btn" type="button">View Calendar</button>
+                    </article>
+                    <article class="card">
+                        <h3>Recent Announcements</h3>
+                        <ul id="member-announcements-list"></ul>
+                    </article>
+                    <article class="card">
+                        <h3>Membership Fees</h3>
+                        <p>Your current fee is: <strong>$25.00</strong></p>
+                        <button id="payment-btn" class="action-btn primary" type="button">Make a Payment</button>
+                    </article>
+                </div>
+                <button class="logout-btn action-btn secondary" type="button">Logout</button>
+            </section>
+
+            <section id="clubs" class="page hidden" aria-live="polite" aria-labelledby="clubs-heading">
+                <h2 id="clubs-heading" class="section-heading">Clubs Directory</h2>
+                <div class="clubs-grid" id="clubs-grid" role="list"></div>
+            </section>
+
+            <section id="profile" class="page hidden" aria-live="polite" aria-labelledby="profile-heading">
+                <h2 id="profile-heading" class="section-heading">My Profile</h2>
+                <article class="card profile-card">
+                    <figure>
+                        <img src="assets/profile.png" alt="Profile picture" class="profile-image" />
+                        </figure>
+                    <h3 id="profile-name"></h3>
+                    <p id="profile-email"></p>
+                    <p id="profile-role"></p>
+                    <button id="edit-profile" class="action-btn" disabled type="button">Edit Profile</button>
+                </article>
+                <article class="card">
+                    <h3>My Clubs</h3>
+                    <ul id="member-clubs-list"></ul>
+                </article>
+                <button class="logout-btn action-btn secondary" type="button">Logout</button>
+            </section>
+
+            <section id="payment-page" class="page hidden" aria-live="polite" aria-labelledby="payment-heading">
+                <h2 id="payment-heading" class="section-heading">Make a Payment</h2>
+                <article class="card">
+                    <form id="payment-form" novalidate>
+                        <div class="form-group">
+                            <label for="payment-amount">Amount:</label>
+                            <input type="text" id="payment-amount" value="25.00" readonly aria-readonly="true" />
+                        </div>
+                        
+                        <fieldset id="gcash-fields" class="payment-fields">
+                            <legend class="visually-hidden">GCash Details</legend>
+                            <div class="form-group">
+                                <label for="gcash-number">GCash Number:</label>
+                                <input type="text" id="gcash-number" name="gcash-number" value="0917XXXXXXX" readonly /> 
+                            </div>
+                            
+                            <div id="gcash-qr-container" class="center" style="margin-top: 20px;">
+                                <p style="font-weight: 600; margin-bottom: 10px;">Scan to Pay (25.00)</p>
+                                <img id="gcash-qr-code" 
+                                     src=".jpg" 
+                                     alt="GCash QR Code for payment" 
+                                     style="max-width: 200px; width: 100%; border-radius: 8px; border: 2px solid var(--primary-color);"
+                                />
+                                <p style="font-size: 0.85rem; margin-top: 10px;">Reference Number will be provided upon transaction.</p>
+                            </div>
+                        </fieldset>
+
+                        <div class="form-actions">
+                            <button id="process-payment-btn" class="action-btn primary" type="submit">I Have Paid (Confirm Payment)</button>
+                            <button id="cancel-payment-btn" class="action-btn secondary" type="button">Cancel</button>
+                        </div>
+                    </form>
+                </article>
+            </section>
+
+            <section id="calendar-page" class="page hidden" aria-live="polite" aria-labelledby="calendar-heading">
+                <h2 id="calendar-heading" class="section-heading">Calendar</h2>
+                <article class="card">
+                    <div class="calendar-header" role="region" aria-label="Calendar Navigation">
+                        <button id="prev-month" aria-label="Previous month" type="button">◀</button>
+                        <span id="month-year" aria-live="polite" aria-atomic="true"></span>
+                        <button id="next-month" aria-label="Next month" type="button">▶</button>
+                    </div>
+                    <table class="calendar-table" role="grid" aria-label="Monthly Calendar">
+                        <thead>
+                            <tr>
+                                <th scope="col">Sun</th>
+                                <th scope="col">Mon</th>
+                                <th scope="col">Tue</th>
+                                <th scope="col">Wed</th>
+                                <th scope="col">Thu</th>
+                                <th scope="col">Fri</th>
+                                <th scope="col">Sat</th>
+                            </tr>
+                        </thead>
+                        <tbody id="calendar-body"></tbody>
+                    </table>
+                </article>
+                <article class="card">
+                    <h3>Upcoming Events</h3>
+                    <ul id="calendar-events-list"></ul>
+                </article>
+            </section>
+        </div>
+    </main>
+
+    <dialog id="club-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="club-modal-title">
+        <article class="modal-content">
+            <h3 id="club-modal-title"></h3>
+            <img id="club-modal-image" src="" alt="Club image" />
+            <p id="club-modal-description"></p>
+            <div id="club-modal-details"></div>
+            <div class="modal-actions">
+                <button id="join-club-modal" class="action-btn primary" type="button">Join Club</button>
+                <button id="close-club-modal" class="action-btn secondary" type="button">Close</button>
             </div>
-            <div class="form-group">
-              <label for="login-password">Password</label>
-              <input type="password" id="login-password" name="login-password" required />
+        </article>
+    </dialog>
+    
+    <dialog id="announcement-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="announcement-modal-title">
+        <article class="modal-content">
+            <h3 id="announcement-modal-title">New Announcement</h3>
+            <textarea id="announcement-text" placeholder="Write your announcement here..." rows="4" aria-label="Announcement text"></textarea>
+            <div class="modal-actions">
+                <button id="submit-announcement-btn" class="action-btn primary" type="button">Post</button>
+                <button id="close-announcement-modal" class="action-btn secondary" type="button">Cancel</button>
             </div>
-            <button id="login-btn" class="action-btn primary" type="submit">Login</button>
-            <p style="margin-top:10px;">Don’t have an account? 
-  <button id="goto-signup-btn" type="button" class="action-btn gray">Sign Up</button>
-</p>
+        </article>
+    </dialog>
 
-          </form>
-        </div>
-      </section>
+    <dialog id="manage-members-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="manage-members-modal-title">
+        <article class="modal-content">
+            <h3 id="manage-members-modal-title">Manage Club Members &amp; Leaders</h3>
+            <div id="member-management-list" role="region" aria-label="Current members and leaders"></div>
 
-      <!-- Signup Page -->
-<section id="signup-page" class="page container hidden">
-  <h2 class="section-heading">Create an Account</h2>
-  <div class="card center">
-    <h3>Sign Up</h3>
-    <form id="signup-form">
-      <div class="form-group">
-        <label for="signup-email">Email</label>
-        <input type="email" id="signup-email" name="signup-email" required />
-      </div>
-      <div class="form-group">
-        <label for="signup-password">Password</label>
-        <input type="password" id="signup-password" name="signup-password" required />
-      </div>
-      <div class="form-group">
-        <label for="signup-role">Role</label>
-        <select id="signup-role" name="signup-role">
-          <option value="Member">Member</option>
-        </select>
-      </div>
-      <button id="signup-btn" class="action-btn primary" type="submit">Sign Up</button>
-      <p style="margin-top:10px;">Already have an account? 
-        <button id="goto-login-btn" type="button" class="action-btn gray">Login</button>
-      </p>
-    </form>
-  </div>
-</section>
+            <form>
+                <div class="form-actions">
+                    <div class="form-group">
+                        <label for="new-member-select">Add a new member to a club:</label>
+                        <select id="new-member-select" name="new-member-select"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="target-club-select">Select Club:</label>
+                        <select id="target-club-select" name="target-club-select"></select>
+                    </div>
+                    <button id="add-member-btn" class="action-btn primary" type="button">Add Member</button>
+                </div>
+            </form>
 
-
-      <!-- Welcome hub: still available but no longer forced on every login -->
-      <section id="login-dashboard" class="page hidden container">
-        <h2 class="section-heading">Login Dashboard</h2>
-        <div class="card center">
-          <p>Welcome back! You are logged in as: <strong id="userRole"></strong></p>
-          <div style="margin-top:16px;">
-            <!-- These buttons used to duplicate header IDs — changed to unique IDs and wired to functions -->
-            <button id="login-goto-dashboard" class="action-btn primary" type="button">Go to Dashboard</button>
-            <button id="login-view-clubs" class="action-btn" type="button">View Clubs</button>
-            <button id="login-view-profile" class="action-btn" type="button">My Profile</button>
-            <button id="logout-btn" class="logout-btn action-btn secondary" type="button">Logout</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Creator Dashboard -->
-      <section id="creator-dashboard" class="page hidden" aria-live="polite">
-        <h2 class="section-heading">Creator Dashboard</h2>
-        <p>Welcome, Creator! Here you can manage all clubs and assign admins.</p>
-        <div class="dashboard-grid">
-          <div class="card">
-            <h3>Statistics</h3>
-            <p><strong>Total Clubs:</strong> <span id="total-clubs-count"></span></p>
-            <p><strong>Total Members:</strong> <span id="total-members-count"></span></p>
-          </div>
-          <div class="card">
-            <h3>Quick Actions</h3>
-            <button id="create-club-btn" class="action-btn primary" type="button">Create New Club</button>
-            <button id="post-announcement-btn" class="action-btn primary" type="button">Post Announcement</button>
-            <button id="create-event-btn" class="action-btn primary" type="button">Create Event</button>
-          </div>
-          <div class="card">
-            <h3>Management Tools</h3>
-            <button id="creator-view-clubs" class="action-btn" type="button">View All Clubs</button>
-            <button id="creator-manage-members-btn" class="action-btn" type="button">Manage All Members</button>
-          </div>
-        </div>
-        <button class="logout-btn action-btn secondary" type="button">Logout</button>
-      </section>
-
-      <!-- Admin Dashboard -->
-      <section id="admin-dashboard" class="page hidden" aria-live="polite">
-        <h2 class="section-heading">Admin Dashboard</h2>
-        <p>Welcome, Club Admin! Manage your club's members and events.</p>
-        <div class="dashboard-grid">
-          <div class="card">
-            <h3 id="admin-club-name"></h3>
-            <p><strong>Members:</strong> <span id="admin-club-members"></span></p>
-            <p><strong>Events:</strong> <span id="admin-club-events"></span></p>
-            <button id="admin-manage-club-btn" class="action-btn" type="button">Manage Club</button>
-          </div>
-          <div class="card">
-            <h3>Quick Actions</h3>
-            <button id="admin-create-event-btn" class="action-btn primary" type="button">Create New Event</button>
-            <button id="admin-post-announcement-btn" class="action-btn primary" type="button">Post Announcement</button>
-          </div>
-          <div class="card">
-            <h3>Recent Announcements</h3>
-            <ul id="admin-announcements-list"></ul>
-          </div>
-        </div>
-        <button class="logout-btn action-btn secondary" type="button">Logout</button>
-      </section>
-
-      <!-- Member Dashboard -->
-      <section id="member-dashboard" class="page hidden" aria-live="polite">
-        <h2 class="section-heading">Member Dashboard</h2>
-        <p>Welcome, Member! Explore clubs and join activities.</p>
-        <div class="dashboard-grid">
-          <div class="card">
-            <h3>My Clubs</h3>
-            <ul id="member-dashboard-clubs-list"></ul>
-            <button id="member-view-clubs" class="action-btn" type="button">View All Clubs</button>
-          </div>
-          <div class="card">
-            <h3>Upcoming Events</h3>
-            <ul id="member-events-list"></ul>
-            <button id="open-calendar" class="action-btn" type="button">View Calendar</button>
-          </div>
-          <div class="card">
-            <h3>Recent Announcements</h3>
-            <ul id="member-announcements-list"></ul>
-          </div>
-          <div class="card">
-            <h3>Membership Fees</h3>
-            <p>Your current fee is: <strong>$25.00</strong></p>
-            <button id="payment-btn" class="action-btn primary" type="button">Make a Payment</button>
-          </div>
-        </div>
-        <button class="logout-btn action-btn secondary" type="button">Logout</button>
-      </section>
-
-      <!-- Clubs directory -->
-      <section id="clubs" class="page hidden" aria-live="polite">
-        <h2 class="section-heading">Clubs Directory</h2>
-        <div class="clubs-grid" id="clubs-grid"></div>
-      </section>
-
-      <!-- Profile -->
-      <section id="profile" class="page hidden" aria-live="polite">
-        <h2 class="section-heading">My Profile</h2>
-        <div class="card profile-card">
-          <img src="assets/profile.png" alt="Profile picture" class="profile-image" />
-          <h3 id="profile-name"></h3>
-          <p id="profile-email"></p>
-          <p id="profile-role"></p>
-          <button id="edit-profile" class="action-btn" disabled type="button">Edit Profile</button>
-        </div>
-        <div class="card">
-          <h3>My Clubs</h3>
-          <ul id="member-clubs-list"></ul>
-        </div>
-        <button class="logout-btn action-btn secondary" type="button">Logout</button>
-      </section>
-
-      <!-- Payment -->
-      <section id="payment-page" class="page hidden" aria-live="polite">
-        <h2 class="section-heading">Make a Payment</h2>
-        <div class="card">
-          <form id="payment-form" novalidate>
-            <div class="form-group">
-              <label for="payment-amount">Amount:</label>
-              <input type="text" id="payment-amount" value="25.00" readonly />
+            <div class="modal-actions">
+                <button id="close-manage-members-modal" class="action-btn secondary" type="button">Close</button>
             </div>
-            <div class="form-group">
-              <label for="payment-method">Payment Method:</label>
-              <select id="payment-method" name="payment-method">
-                <option value="card">Credit/Debit Card</option>
-                <option value="gcash">GCash</option>
-                <option value="paypal">PayPal</option>
-                <option value="paymaya">PayMaya</option>
-              </select>
-            </div>
+        </article>
+    </dialog>
 
-            <div id="card-fields" class="payment-fields">
-              <div class="form-group">
-                <label for="card-number">Card Number:</label>
-                <input type="text" id="card-number" name="card-number" placeholder="**** **** **** ****" />
-              </div>
-              <div class="form-group">
-                <label for="expiry-date">Expiry Date:</label>
-                <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/YY" />
-              </div>
-              <div class="form-group">
-                <label for="cvv">CVV:</label>
-                <input type="text" id="cvv" name="cvv" placeholder="***" />
-              </div>
-            </div>
+    <dialog id="event-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="event-modal-title">
+        <article class="modal-content">
+            <h3 id="event-modal-title">Create New Event</h3>
+            <form id="event-form" novalidate>
+                <div class="form-group">
+                    <label for="event-title">Event Title</label>
+                    <input type="text" id="event-title" name="event-title" required />
+                </div>
+                <div class="form-group">
+                    <label for="event-date">Date</label>
+                    <input type="date" id="event-date" name="event-date" required />
+                </div>
+                <div class="form-group">
+                    <label for="event-description">Description</label>
+                    <textarea id="event-description" name="event-description" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="event-club-select">Assign to Club (optional)</label>
+                    <select id="event-club-select" name="event-club-select"></select>
+                </div>
+                <div class="modal-actions">
+                    <button id="post-event-btn" class="action-btn primary" type="submit">Post Event</button>
+                    <button id="cancel-event-btn" class="action-btn secondary" type="button">Cancel</button>
+                </div>
+            </form>
+        </article>
+    </dialog>
 
-            <div id="gcash-fields" class="payment-fields hidden">
-              <div class="form-group">
-                <label for="gcash-number">GCash Number:</label>
-                <input type="text" id="gcash-number" name="gcash-number" placeholder="09XXXXXXXXX" />
-              </div>
-            </div>
+    <dialog id="add-club-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="add-club-modal-title">
+        <article class="modal-content">
+            <h3 id="add-club-modal-title">Create New Club</h3>
+            <form id="add-club-form" novalidate>
+                <div class="form-group">
+                    <label for="club-name">Club Name</label>
+                    <input type="text" id="club-name" name="club-name" required />
+                </div>
+                <div class="form-group">
+                    <label for="club-description">Description</label>
+                    <textarea id="club-description" name="club-description" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="club-image">Image URL</label>
+                    <input type="url" id="club-image" name="club-image" placeholder="assets/club-image.jpg" required />
+                </div>
+                <div class="form-group">
+                    <label for="club-admin-select">Assign Admin (optional)</label>
+                    <select id="club-admin-select" name="club-admin-select">
+                        <option value="">No Admin</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button id="submit-club-btn" class="action-btn primary" type="submit">Create Club</button>
+                    <button id="cancel-club-btn" class="action-btn secondary" type="button">Cancel</button>
+                </div>
+            </form>
+        </article>
+    </dialog>
 
-            <div id="paypal-fields" class="payment-fields hidden">
-              <div class="form-group">
-                <label for="paypal-email">PayPal Email:</label>
-                <input type="email" id="paypal-email" name="paypal-email" placeholder="example@paypal.com" />
-              </div>
-            </div>
-
-            <div id="paymaya-fields" class="payment-fields hidden">
-              <div class="form-group">
-                <label for="paymaya-number">PayMaya Number:</label>
-                <input type="text" id="paymaya-number" name="paymaya-number" placeholder="09XXXXXXXXX" />
-              </div>
-            </div>
-
-            <div class="form-actions">
-              <button id="process-payment-btn" class="action-btn primary" type="submit">Process Payment</button>
-              <button id="cancel-payment-btn" class="action-btn secondary" type="button">Cancel</button>
-            </div>
-          </form>
-        </div>
-      </section>
-
-      <!-- Calendar -->
-      <section id="calendar-page" class="page hidden" aria-live="polite">
-        <h2 class="section-heading">Calendar</h2>
-        <div class="card">
-          <div class="calendar-header">
-            <button id="prev-month" aria-label="Previous month" type="button">◀</button>
-            <span id="month-year"></span>
-            <button id="next-month" aria-label="Next month" type="button">▶</button>
-          </div>
-          <table class="calendar-table" role="grid" aria-label="Calendar">
-            <thead>
-              <tr>
-                <th scope="col">Sun</th>
-                <th scope="col">Mon</th>
-                <th scope="col">Tue</th>
-                <th scope="col">Wed</th>
-                <th scope="col">Thu</th>
-                <th scope="col">Fri</th>
-                <th scope="col">Sat</th>
-              </tr>
-            </thead>
-            <tbody id="calendar-body"></tbody>
-          </table>
-        </div>
-        <div class="card">
-          <h3>Upcoming Events</h3>
-          <ul id="calendar-events-list"></ul>
-        </div>
-      </section>
-    </div>
-  </main>
-
-  <!-- Modals (kept 'hidden' initially; script will remove it when opening) -->
-  <div id="club-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="club-modal-title">
-    <div class="modal-content">
-      <h3 id="club-modal-title"></h3>
-      <img id="club-modal-image" src="" alt="Club image" />
-      <p id="club-modal-description"></p>
-      <div id="club-modal-details"></div>
-      <div class="modal-actions">
-        <button id="join-club-modal" class="action-btn primary" type="button">Join Club</button>
-        <button id="close-club-modal" class="action-btn secondary" type="button">Close</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="announcement-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="announcement-modal-title">
-    <div class="modal-content">
-      <h3 id="announcement-modal-title">New Announcement</h3>
-      <textarea id="announcement-text" placeholder="Write your announcement here..." rows="4" aria-label="Announcement text"></textarea>
-      <div class="modal-actions">
-        <button id="submit-announcement-btn" class="action-btn primary" type="button">Post</button>
-        <button id="close-announcement-modal" class="action-btn secondary" type="button">Cancel</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="manage-members-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="manage-members-modal-title">
-    <div class="modal-content">
-      <h3 id="manage-members-modal-title">Manage Club Members &amp; Leaders</h3>
-      <div id="member-management-list"></div>
-
-      <div class="form-actions">
-        <div class="form-group">
-          <label for="new-member-select">Add a new member to a club:</label>
-          <select id="new-member-select"></select>
-        </div>
-        <div class="form-group">
-          <label for="target-club-select">Select Club:</label>
-          <select id="target-club-select"></select>
-        </div>
-        <button id="add-member-btn" class="action-btn primary" type="button">Add Member</button>
-      </div>
-
-      <div class="modal-actions">
-        <button id="close-manage-members-modal" class="action-btn secondary" type="button">Close</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="event-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="event-modal-title">
-    <div class="modal-content">
-      <h3 id="event-modal-title">Create New Event</h3>
-      <form id="event-form" novalidate>
-        <div class="form-group">
-          <label for="event-title">Event Title</label>
-          <input type="text" id="event-title" name="event-title" required />
-        </div>
-        <div class="form-group">
-          <label for="event-date">Date</label>
-          <input type="date" id="event-date" name="event-date" required />
-        </div>
-        <div class="form-group">
-          <label for="event-description">Description</label>
-          <textarea id="event-description" name="event-description" rows="3" required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="event-club-select">Assign to Club (optional)</label>
-          <select id="event-club-select" name="event-club-select"></select>
-        </div>
-      </form>
-      <div class="modal-actions">
-        <button id="post-event-btn" class="action-btn primary" type="button">Post Event</button>
-        <button id="cancel-event-btn" class="action-btn secondary" type="button">Cancel</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Add Club Modal -->
-  <div id="add-club-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="add-club-modal-title">
-    <div class="modal-content">
-      <h3 id="add-club-modal-title">Create New Club</h3>
-      <form id="add-club-form" novalidate>
-        <div class="form-group">
-          <label for="club-name">Club Name</label>
-          <input type="text" id="club-name" name="club-name" required />
-        </div>
-        <div class="form-group">
-          <label for="club-description">Description</label>
-          <textarea id="club-description" name="club-description" rows="4" required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="club-image">Image URL</label>
-          <input type="text" id="club-image" name="club-image" placeholder="assets/club-image.jpg" required />
-        </div>
-        <div class="form-group">
-          <label for="club-admin-select">Assign Admin (optional)</label>
-          <select id="club-admin-select" name="club-admin-select">
-            <option value="">No Admin</option>
-          </select>
-        </div>
-      </form>
-      <div class="modal-actions">
-        <button id="submit-club-btn" class="action-btn primary" type="button">Create Club</button>
-        <button id="cancel-club-btn" class="action-btn secondary" type="button">Cancel</button>
-      </div>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+    <script src="Clubhub.js"></script>
 </body>
 </html>
